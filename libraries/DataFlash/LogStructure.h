@@ -192,6 +192,8 @@ struct PACKED log_BARO {
     uint32_t sample_time_ms;
     float   drift_offset;
     float   ground_temp;
+    float   correction;
+    float   gpsalt_over_home;
 };
 
 struct PACKED log_AHRS {
@@ -754,6 +756,39 @@ struct PACKED log_Rally {
 
 // #endif // SBP_HW_LOGGING
 
+#define ACC_LABELS "TimeUS,SampleUS,AccX,AccY,AccZ"
+#define ACC_FMT "QQfff"
+
+// see "struct sensor" in AP_Baro.h and "Log_Write_Baro":
+#define BARO_LABELS "TimeUS,Alt,Press,Temp,CRt,SMS,Offset,GndTemp,Corr,GpsOH"
+#define BARO_FMT   "QffcfIffff"
+
+#define ESC_LABELS "TimeUS,RPM,Volt,Curr,Temp"
+#define ESC_FMT   "Qcccc"
+
+#define GPA_LABELS "TimeUS,VDop,HAcc,VAcc,SAcc,VV,SMS"
+#define GPA_FMT   "QCCCCBI"
+
+// see "struct GPS_State" and "Log_Write_GPS":
+#define GPS_LABELS "TimeUS,Status,GMS,GWk,NSats,HDop,Lat,Lng,Alt,Spd,GCrs,VZ,U"
+#define GPS_FMT   "QBIHBcLLefffB"
+
+#define GYR_LABELS "TimeUS,SampleUS,GyrX,GyrY,GyrZ"
+#define GYR_FMT    "QQfff"
+
+#define IMT_LABELS "TimeUS,DelT,DelvT,DelaT,DelAX,DelAY,DelAZ,DelVX,DelVY,DelVZ"
+#define IMT_FMT    "Qfffffffff"
+
+#define IMU_LABELS "TimeUS,GyrX,GyrY,GyrZ,AccX,AccY,AccZ,ErrG,ErrA,Temp,GyHlt,AcHlt"
+#define IMU_FMT   "QffffffIIfBB"
+
+#define MAG_LABELS "TimeUS,MagX,MagY,MagZ,OfsX,OfsY,OfsZ,MOfsX,MOfsY,MOfsZ,Health,S"
+#define MAG_FMT   "QhhhhhhhhhBI"
+
+#define PID_LABELS "TimeUS,Des,P,I,D,FF,AFF"
+#define PID_FMT    "Qffffff"
+
+
 /*
 Format characters in the format string for binary log messages
   b   : int8_t
@@ -806,7 +841,7 @@ Format characters in the format string for binary log messages
     { LOG_RSSI_MSG, sizeof(log_RSSI), \
       "RSSI",  "Qf",     "TimeUS,RXRSSI" }, \
     { LOG_BARO_MSG, sizeof(log_BARO), \
-      "BARO",  "QffcfIff", "TimeUS,Alt,Press,Temp,CRt,SMS,Offset,GndTemp" }, \
+      "BARO",  BARO_FMT, BARO_LABELS }, \
     { LOG_POWR_MSG, sizeof(log_POWR), \
       "POWR","QffH","TimeUS,Vcc,VServo,Flags" },  \
     { LOG_CMD_MSG, sizeof(log_Cmd), \
@@ -949,9 +984,9 @@ Format characters in the format string for binary log messages
     { LOG_PIDL_MSG, sizeof(log_PID), \
       "PIDL", "Qffffff",  "TimeUS,Des,P,I,D,FF,AFF" }, \
     { LOG_BAR2_MSG, sizeof(log_BARO), \
-      "BAR2",  "QffcfIf", "TimeUS,Alt,Press,Temp,CRt,SMS,Offset" }, \
+      "BAR2",  BARO_FMT, BARO_LABELS }, \
     { LOG_BAR3_MSG, sizeof(log_BARO), \
-      "BAR3",  "QffcfIf", "TimeUS,Alt,Press,Temp,CRt,SMS,Offset" }, \
+      "BAR3",  BARO_FMT, BARO_LABELS }, \
     { LOG_VIBE_MSG, sizeof(log_Vibe), \
       "VIBE", "QfffIII",     "TimeUS,VibeX,VibeY,VibeZ,Clip0,Clip1,Clip2" }, \
     { LOG_IMUDT_MSG, sizeof(log_IMUDT), \
