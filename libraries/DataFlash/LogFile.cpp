@@ -837,6 +837,8 @@ void DataFlash_Class::Log_Write_Baro(AP_Baro &baro, uint64_t time_us)
         climbrate     : climbrate,
         sample_time_ms: baro.get_last_update(0),
         drift_offset  : drift_offset,
+        correction       : baro.get_offset(),
+        gpsalt_over_home : baro.get_gps()
     };
     WriteBlock(&pkt, sizeof(pkt));
 
@@ -850,6 +852,8 @@ void DataFlash_Class::Log_Write_Baro(AP_Baro &baro, uint64_t time_us)
             climbrate     : climbrate,
             sample_time_ms: baro.get_last_update(1),
             drift_offset  : drift_offset,
+            correction       : baro.get_offset(),
+            gpsalt_over_home : baro.get_gps()
         };
         WriteBlock(&pkt2, sizeof(pkt2));        
     }
@@ -864,6 +868,8 @@ void DataFlash_Class::Log_Write_Baro(AP_Baro &baro, uint64_t time_us)
             climbrate     : climbrate,
             sample_time_ms: baro.get_last_update(2),
             drift_offset  : drift_offset,
+            correction       : baro.get_offset(),
+            gpsalt_over_home : baro.get_gps()
         };
         WriteBlock(&pkt3, sizeof(pkt3));        
     }
