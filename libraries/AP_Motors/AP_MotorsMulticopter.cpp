@@ -100,7 +100,7 @@ const AP_Param::GroupInfo AP_MotorsMulticopter::var_info[] = {
     // @Range: 0 2000
     // @User: Advanced
     AP_GROUPINFO("PWM_MAX", 17, AP_MotorsMulticopter, _pwm_max, 0),
-
+    
     // @Param: SPIN_MIN
     // @DisplayName: Motor Spin minimum
     // @Description: Point at which the thrust starts expressed as a number from 0 to 1 in the entire output range.  Should be higher than MOT_SPIN_ARM.
@@ -136,6 +136,14 @@ const AP_Param::GroupInfo AP_MotorsMulticopter::var_info[] = {
     // @Values: 0:Disabled, 1:Learn, 2:LearnAndSave
     // @User: Advanced
     AP_GROUPINFO("HOVER_LEARN", 22, AP_MotorsMulticopter, _throttle_hover_learn, HOVER_LEARN_AND_SAVE),
+
+    // @Param: THR_WARN
+    // @DisplayName: Throttle Warn range
+    // @Description: Warn, if a motor output signal is closer than THR_WARN percent to minimum or maximum throttle in flight. 0 disables warning.
+    // @Range: 0 1
+    // @Units: 1
+    // @User: Advanced
+    AP_GROUPINFO("THR_WARN", 23, AP_MotorsMulticopter, _thr_warn_threshold, AP_MOTORS_THR_WARN_DEFAULT),
 
     AP_GROUPEND
 };

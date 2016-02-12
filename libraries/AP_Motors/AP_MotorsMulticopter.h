@@ -26,6 +26,11 @@
 #define AP_MOTORS_BAT_CURR_TC_DEFAULT   5.0f    // Time constant used to limit the maximum current
 #define AP_MOTORS_BATT_VOLT_FILT_HZ     0.5f    // battery voltage filtered at 0.5hz
 
+#define AP_MOTORS_THR_MIX_MIN_DEFAULT   0.1f    // minimum throttle mix
+#define AP_MOTORS_THR_MIX_MID_DEFAULT   0.5f    // manual throttle mix
+#define AP_MOTORS_THR_MIX_MAX_DEFAULT   0.5f    // maximum throttle mix default
+#define AP_MOTORS_THR_WARN_DEFAULT      0.1f    // output warning threshould (default: warning disabled)
+
 // spool definition
 #define AP_MOTORS_SPOOL_UP_TIME         0.5f    // time (in seconds) for throttle to increase from zero to min throttle, and min throttle to full throttle.
 
@@ -161,6 +166,7 @@ protected:
     AP_Int16            _pwm_max;               // maximum PWM value that will ever be output to the motors (if 0, vehicle's throttle input channel's max pwm used)
     AP_Float            _throttle_hover;        // estimated throttle required to hover throttle in the range 0 ~ 1
     AP_Int8             _throttle_hover_learn;  // enable/disabled hover thrust learning
+    AP_Float            _thr_warn_threshold;    // motor output warning threshould
 
     // motor output variables
     bool                motor_enabled[AP_MOTORS_MAX_NUM_MOTORS];    // true if motor is enabled
