@@ -98,7 +98,7 @@ void Copter::parachute_check()
 
     // check for angle error over 30 degrees
     const float angle_error = attitude_control->get_att_error_angle_deg();
-    if (angle_error <= CRASH_CHECK_ANGLE_DEVIATION_DEG) {
+    if (angle_error <= 2*CRASH_CHECK_ANGLE_DEVIATION_DEG) {
         if (control_loss_count > 0) {
             control_loss_count--;
         }
