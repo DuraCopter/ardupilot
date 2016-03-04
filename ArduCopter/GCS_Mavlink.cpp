@@ -114,6 +114,7 @@ NOINLINE void Copter::send_extended_status1(mavlink_channel_t chan)
     uint32_t control_sensors_present;
     uint32_t control_sensors_enabled;
     uint32_t control_sensors_health;
+    uint16_t motor_limits;
 
     // default sensors present
     control_sensors_present = MAVLINK_SENSOR_PRESENT_DEFAULT;
@@ -276,6 +277,9 @@ NOINLINE void Copter::send_extended_status1(mavlink_channel_t chan)
         control_sensors_health &= ~(MAV_SYS_STATUS_SENSOR_3D_GYRO | MAV_SYS_STATUS_SENSOR_3D_ACCEL);
     }
 
+    // motor limit status (lower byte for lower limit, motor 0 = bit 0 )
+    motor_limits =  (motors.limit.motor_upper << AP_MOTORS_MAX_NUM_MOTORS) | motors.limit.motor_lower;
+
     mavlink_msg_sys_status_send(
         chan,
         control_sensors_present,
@@ -287,7 +291,8 @@ NOINLINE void Copter::send_extended_status1(mavlink_channel_t chan)
         battery_remaining,      // in %
         0, // comm drops %,
         0, // comm drops in pkts,
-        0, 0, 0, 0);
+        motor_limits,
+        0, 0, 0);
 
 #if FRSKY_TELEM_ENABLED == ENABLED
     // give mask of error flags to Frsky_Telemetry
