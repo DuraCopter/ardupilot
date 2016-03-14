@@ -192,6 +192,14 @@ void Copter::barometer_accumulate(void)
     barometer.accumulate();
 }
 
+/*
+  adjust baro for changing air pressure
+ */
+void Copter::barometer_adjust(void)
+{
+    barometer.update_alt_target(pos_control.get_alt_target()*0.01f);
+}
+
 void Copter::perf_update(void)
 {
     if (should_log(MASK_LOG_PM))
@@ -502,6 +510,9 @@ void Copter::one_hz_loop()
     terrain_logging();
 
     adsb.set_is_flying(!ap.land_complete);
+
+    // update barometer drift compensation
+    barometer_adjust();
 }
 
 // called at 50hz
@@ -540,6 +551,7 @@ void Copter::update_GPS(void)
 #endif
         }
     }
+    barometer.update_gps_alt(float(gps.location().alt)/100.f);
 }
 
 void Copter::init_simple_bearing()
