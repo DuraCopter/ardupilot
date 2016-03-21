@@ -53,6 +53,7 @@ public:
 
     void EnableWrites(bool enable) { _writes_enabled = enable; }
     bool logging_started(void) const { return log_write_started; }
+    bool GetWritesEnabled() { return _writes_enabled; }
 
     virtual void Init() {
         _writes_enabled = true;
