@@ -261,6 +261,15 @@ float AP_BattMonitor::current_total_mah(uint8_t instance) const {
     }
 }
 
+/// current_total_mah - returns total energy drawn since start-up in watt-hours
+float AP_BattMonitor::total_wh(uint8_t instance) const {
+    if (instance < _num_instances) {
+        return _BattMonitor_STATE(instance).total_wh;
+    } else {
+        return 0.0f;
+    }
+}
+
 /// capacity_remaining_pct - returns the % battery capacity remaining (0 ~ 100)
 uint8_t AP_BattMonitor::capacity_remaining_pct(uint8_t instance) const
 {

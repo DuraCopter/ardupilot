@@ -52,6 +52,7 @@ public:
         float       voltage;            // voltage in volts
         float       current_amps;       // current in amperes
         float       current_total_mah;  // total current draw since start-up
+        float       total_wh;           // total energy draw since start-up
         uint32_t    last_time_micros;   // time when voltage and current was last read
         uint32_t    low_voltage_start_ms;  // time when voltage dropped below the minimum
     };
@@ -89,6 +90,10 @@ public:
     /// current_total_mah - returns total current drawn since start-up in amp-hours
     float current_total_mah(uint8_t instance) const;
     float current_total_mah() const { return current_total_mah(AP_BATT_PRIMARY_INSTANCE); }
+
+    /// total_wh - returns total energy drawn since start-up in amp-hours
+    float total_wh(uint8_t instance) const;
+    float total_wh() const { return total_wh(AP_BATT_PRIMARY_INSTANCE); }
 
     /// capacity_remaining_pct - returns the % battery capacity remaining (0 ~ 100)
     virtual uint8_t capacity_remaining_pct(uint8_t instance) const;
