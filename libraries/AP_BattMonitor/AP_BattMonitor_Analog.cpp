@@ -44,7 +44,7 @@ AP_BattMonitor_Analog::read()
             // .0002778 is 1/3600 (conversion to hours)
             float mah = _state.current_amps * dt * 0.0000002778f;
             _state.current_total_mah += mah;
-            _state.total_wh  += mah * _state.voltage;
+            _state.total_mwh  += mah * _state.voltage;
         }
 
         // record time
