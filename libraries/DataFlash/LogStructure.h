@@ -482,6 +482,7 @@ struct PACKED log_Current {
     float    battery_voltage;
     float    current_amps;
     float    current_total;
+    float    wh_total;
 };
 
 struct PACKED log_Compass {
@@ -855,9 +856,9 @@ Format characters in the format string for binary log messages
     { LOG_ARSP_MSG, sizeof(log_AIRSPEED), \
       "ARSP",  "QffcffB",  "TimeUS,Airspeed,DiffPress,Temp,RawPress,Offset,U" }, \
     { LOG_CURRENT_MSG, sizeof(log_Current), \
-      "CURR", "Qfff","TimeUS,Volt,Curr,CurrTot" },\
+      "CURR", "Qffff","TimeUS,Volt,Curr,CurrTot,WhTot" },\
     { LOG_CURRENT2_MSG, sizeof(log_Current), \
-      "CUR2", "Qfff","TimeUS,Volt,Curr,CurrTot" }, \
+      "CUR2", "Qffff","TimeUS,Volt,Curr,CurrTot,WhTot" }, \
 	{ LOG_ATTITUDE_MSG, sizeof(log_Attitude),\
       "ATT", "QccccCCCC", "TimeUS,DesRoll,Roll,DesPitch,Pitch,DesYaw,Yaw,ErrRP,ErrYaw" }, \
     { LOG_COMPASS_MSG, sizeof(log_Compass), \

@@ -1848,6 +1848,7 @@ void DataFlash_Class::Log_Write_Current(const AP_BattMonitor &battery)
             battery_voltage     : battery.voltage(0),
             current_amps        : battery.current_amps(0),
             current_total       : battery.current_total_mah(0),
+            wh_total            : battery.total_wh(0),
         };
         WriteBlock(&pkt, sizeof(pkt));
     }
@@ -1859,6 +1860,7 @@ void DataFlash_Class::Log_Write_Current(const AP_BattMonitor &battery)
             battery_voltage     : battery.voltage(1),
             current_amps        : battery.current_amps(1),
             current_total       : battery.current_total_mah(1),
+            wh_total            : battery.total_wh(1),
         };
         WriteBlock(&pkt, sizeof(pkt));
     }
