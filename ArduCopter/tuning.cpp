@@ -17,7 +17,7 @@ void Copter::tuning() {
 
     uint16_t radio_in = rc6->get_radio_in();
     float v = constrain_float((radio_in - rc6->get_radio_min()) / float(rc6->get_radio_max() - rc6->get_radio_min()), 0, 1);
-    int16_t control_in = g.radio_tuning_low + v * (g.radio_tuning_high - g.radio_tuning_low);
+    float control_in = g.radio_tuning_low + v * (g.radio_tuning_high - g.radio_tuning_low);
     float tuning_value = control_in / 1000.0f;
     
     // Tuning Value should never be outside the bounds of the specified low and high value
