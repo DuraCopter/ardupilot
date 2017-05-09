@@ -208,6 +208,15 @@ const AP_Param::GroupInfo AP_Mount::var_info[] = {
 
     // 24 is AVAILABLE
 
+    // @Param: _GND2VHCL
+    // @DisplayName: Ground to vehicle cam control
+    // @Description: When active, the gimbal is assumed to be located on a tripod on the ground, pointing to the vehicle. Pitch control is negated, the yaw alignment of the tripod must match the value of MNT_GND2VHCL (in degrees)
+    // @Units: Centi-Degrees
+    // @Range: -1 35900
+    // @Increment: 1
+    AP_GROUPINFO("_GND2VHCL", 24, AP_Mount, state[0]._gnd2vhcl, -1),
+
+
 #if AP_MOUNT_MAX_INSTANCES > 1
     // @Param: 2_DEFLT_MODE
     // @DisplayName: Mount default operating mode

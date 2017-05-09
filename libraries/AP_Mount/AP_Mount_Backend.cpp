@@ -147,8 +147,21 @@ void AP_Mount_Backend::calc_angle_to_location(const struct Location &target, Vec
         angles_to_target_rad.y = atan2f(GPS_vector_z, target_distance);
     }
 
+    // gnd2vhcl?
+    bool gnd2vhcl_mode = _state._gnd2vhcl != -1;
+
     // pan calcs
-    if (calc_pan) {
+    if (gnd2vhcl_mode) {
+       // In ground to vehicle mode, the gimbal is mounted on a tripod on the ground and is intented to point to the vehicle. The MAVLink connecttion could
+       // be implemented e.g. by a pair of 3DR radios between the SERIALx port of the Pixhawk and the MAVLink-capable gimbal controller.
+
+       // The yaw alignment of the tripod has to be set up by the GND2VHCL param in a way matching to the phsical alignment relative to N,
+       // the pitch alignment is inverted and roll is set to zero. The location of the tripod has to be defined by the "point camera to" function of the GCS.
+       angles_to_target_rad.z = wrap_PI(atan2f(GPS_vector_x, GPS_vector_y) + rc_ch(_state._pan_rc_in)->norm_input()*M_PI);
+       angles_to_target_rad.y = -angles_to_target_rad.y;
+       angles_to_target_rad.x = 0;
+    }
+    else if (calc_pan) {
         // calc absolute heading and then onvert to vehicle relative yaw
         angles_to_target_rad.z = atan2f(GPS_vector_x, GPS_vector_y);
         if (relative_pan) {
