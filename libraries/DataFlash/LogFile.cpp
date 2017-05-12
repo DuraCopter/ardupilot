@@ -1933,6 +1933,10 @@ void DataFlash_Class::Log_Write_Current(const AP_BattMonitor &battery)
             pkt.cell_voltages[i] = cells.cells[i] + 1;
         }
         WriteBlock(&pkt, sizeof(pkt));
+        Log_Write("ENERG", "TimeUS,Pwr,mWhTot", "Qff",
+            AP_HAL::micros64(),
+            battery.current_amps(0)*battery.voltage(0),
+            battery.total_mwh(0));
     }
 
     if (battery.num_instances() >= 2) {
