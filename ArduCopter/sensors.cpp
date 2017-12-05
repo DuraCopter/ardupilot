@@ -312,6 +312,7 @@ void Copter::update_sensor_status_flags(void)
     // set motors outputs as enabled if safety switch is not disarmed (i.e. either NONE or ARMED)
     if (hal.util->safety_switch_state() != AP_HAL::Util::SAFETY_DISARMED) {
         control_sensors_enabled |= MAV_SYS_STATUS_SENSOR_MOTOR_OUTPUTS;
+        motor_limits =  (motors->limit.motor_upper << 16) | motors->limit.motor_lower;
     }
 
     if (copter.DataFlash.logging_enabled()) {
