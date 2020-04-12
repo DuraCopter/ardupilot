@@ -212,6 +212,14 @@ const AP_Param::GroupInfo AP_MotorsMulticopter::var_info[] = {
     // @User: Advanced
     AP_GROUPINFO("SAFE_TIME", 42, AP_MotorsMulticopter, _safe_time, AP_MOTORS_SAFE_TIME_DEFAULT),
 
+    // @Param: THR_WARN
+    // @DisplayName: Throttle Warn range
+    // @Description: Warn, if a motor output signal is closer than THR_WARN percent to minimum or maximum throttle in flight. 0 disables warning.
+    // @Range: 0 1
+    // @Units: 1
+    // @User: Advanced
+    AP_GROUPINFO("THR_WARN", 50, AP_MotorsMulticopter, _thr_warn_threshold, AP_MOTORS_THR_WARN_DEFAULT),
+
     AP_GROUPEND
 };
 
