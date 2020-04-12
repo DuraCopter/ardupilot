@@ -145,6 +145,10 @@ void AP_MotorsMatrix::output_armed_stabilizing()
     float   yaw_allowed = 1.0f;         // amount of yaw we can fit in
     float   thr_adj;                    // the difference between the pilot's desired throttle and throttle_thrust_best_rpy
 
+    // init motor limit flags
+    limit.motor_upper = 0;
+    limit.motor_lower = 0;
+
     // apply voltage and air pressure compensation
     const float compensation_gain = get_compensation_gain(); // compensation for battery voltage and altitude
     roll_thrust = (_roll_in + _roll_in_ff) * compensation_gain;
@@ -201,6 +205,15 @@ void AP_MotorsMatrix::output_armed_stabilizing()
         if (motor_enabled[i]) {
             // calculate the thrust outputs for roll and pitch
             _thrust_rpyt_out[i] = roll_thrust * _roll_factor[i] + pitch_thrust * _pitch_factor[i];
+
+            // test for throttle limit warning
+            if (_thrust_rpyt_out[i] > 1-_thr_warn_threshold) {
+                limit.motor_upper |= (1<<i);
+            }
+            else if (_thrust_rpyt_out[i] < _thr_warn_threshold) {
+                limit.motor_lower |= (1<<i);
+            }
+
             // record lowest roll + pitch command
             if (_thrust_rpyt_out[i] < rp_low) {
                 rp_low = _thrust_rpyt_out[i];
